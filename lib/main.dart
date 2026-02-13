@@ -16,3 +16,16 @@ class MyGames extends StatelessWidget {
     );
   }
 }
+
+class GameScreen extends StatelessWidget {
+  const GameScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: const Center(
+        child: Text('Game akan dimulai sebentar lagi!'),
+      ),
+    );
+  }
+}
