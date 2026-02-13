@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-void main(){
-  runApp( MyGames() 
-  );
+void main() {
+  runApp(MyGames());
 }
 
 class MyGames extends StatelessWidget {
@@ -10,13 +9,9 @@ class MyGames extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Games of Turtusi',
-      home: const GameScreen(),
-    );
+    return MaterialApp(title: 'Games of Turtusi', home: const GameScreen());
   }
 }
-
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -24,11 +19,13 @@ class GameScreen extends StatefulWidget {
   @override
   State<GameScreen> createState() => _GameScreenState();
 }
+
 class _GameScreenState extends State<GameScreen> {
   @override
   void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +37,7 @@ class _GameScreenState extends State<GameScreen> {
             child: Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Colors.blueAccent,
+                color: Colors.black54,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: const Text(
@@ -52,7 +49,23 @@ class _GameScreenState extends State<GameScreen> {
                 ),
               ),
             ),
-          )
+          ),
+          Positioned(
+            top: 50,
+            right: 20,
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.music_note, color: Colors.black),
+                  onPressed: () => {},
+                ),
+                IconButton(
+                  icon: const Icon(Icons.volume_up, color: Colors.black),
+                  onPressed: () => {},
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
