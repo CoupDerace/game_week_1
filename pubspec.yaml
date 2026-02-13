@@ -28,6 +28,9 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  flame: ^1.16.0
+  flame_audio: ^2.1.6
+
   flutter:
     sdk: flutter
 
@@ -51,6 +54,9 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - assets/audio/music/
+    - assets/audio/sfx/
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
