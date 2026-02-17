@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyGames());
+  runApp(const MyGames());
 }
 
 class MyGames extends StatelessWidget {
@@ -9,7 +9,10 @@ class MyGames extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Games of Turtusi', home: const GameScreen());
+    return const MaterialApp(
+      title: 'Games of Turtusi',
+      home: GameScreen(),
+    );
   }
 }
 
@@ -22,64 +25,58 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   final ValueNotifier<int> counter = ValueNotifier<int>(1);
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
-            child: Stack(
+          Positioned(
+            top: 50,
+            left: 20,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: ValueListenableBuilder<int>(
+                valueListenable: counter,
+                builder: (context, score, child) {
+                  return Text(
+                    'Score: $score',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+
+          Positioned(
+            top: 50,
+            right: 20,
+            child: Row(
               children: [
-                Positioned(
-                  top: 50,
-                  left: 20,
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ValueListenableBuilder(
-                      valueListenable: counter,
-                      builder: (context, score, child) {
-                        return Text(
-                          'score: $score',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+                IconButton(
+                  icon: const Icon(Icons.music_note),
+                  onPressed: () {},
                 ),
-                Positioned(
-                  top: 50,
-                  right: 20,
-                  child: Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.music_note, color: Colors.black),
-                        onPressed: () => {},
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.volume_up, color: Colors.black),
-                        onPressed: () => {},
-                      ),
-                    ],
-                  ),
+                IconButton(
+                  icon: const Icon(Icons.volume_up),
+                  onPressed: () {},
                 ),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16),
+
+          Positioned(
+            bottom: 40,
+            left: 20,
+            right: 20,
             child: ElevatedButton(
               onPressed: () {
                 counter.value++;
