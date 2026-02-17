@@ -19,31 +19,23 @@ class AudioManager {
     try {
       await FlameAudio.audioCache.loadAll([
         'music/background_music.mp3',
-        'sfx/collect.mp3',
         'sfx/explosion.mp3',
+        'sfx/collect.mp3',
         'sfx/jump.mp3',
       ]);
-      print('Audio initialized successfully');
+      print('Audio Initialize Successfully');
     } catch (e) {
       print('Error initializing audio: $e');
     }
   }
 
-  void playbackgroundMusic() {
+  void playBackgroundMusic() {
     if (_isMusicEnabled) {
       try {
-        FlameAudio.bgm.play('music/background_music.mp3', volume: _musicVolume);
+        FlameAudio.bgm.play('music/instrumental.mp3', volume: _musicVolume);
       } catch (e) {
-        print('Error playing background music: $e');
+        print('Error playing backsound: $e');
       }
-    }
-  }
-
-  void stopBackgroundMusic() {
-    try {
-      FlameAudio.bgm.stop();
-    } catch (e) {
-      print('Error stopping background music: $e');
     }
   }
 
@@ -51,7 +43,7 @@ class AudioManager {
     try {
       FlameAudio.bgm.pause();
     } catch (e) {
-      print('Error pausing background music: $e');
+      print('Error when paused backsound: $e');
     }
   }
 
@@ -59,16 +51,16 @@ class AudioManager {
     try {
       FlameAudio.bgm.resume();
     } catch (e) {
-      print('Error resuming background music: $e');
+      print('error resuming backsound: $e');
     }
   }
 
-  void playSfx(String sfxName) {
+  void playSfx(String fileName) {
     if (_isSfxEnabled) {
       try {
-        FlameAudio.play('sfx/$sfxName.mp3', volume: _sfxVolume);
+        FlameAudio.play('sfx/$fileName', volume: _sfxVolume);
       } catch (e) {
-        print('Error playing sound effect "$sfxName": $e');
+        print('error playing sfx: $e');
       }
     }
   }
@@ -76,9 +68,9 @@ class AudioManager {
   void playSfxWithVolume(String fileName, double volume) {
     if (_isSfxEnabled) {
       try {
-        FlameAudio.play('sfx/$fileName.mp3', volume: volume.clamp(0.0, 1.0));
+        final adjustedVolume = (volume * _sfxVolume).clamp(0.0, 1.0);
       } catch (e) {
-        print('Error playing sound effect "$fileName" with volume: $e');
+        print('Error customing volume sound effect: $e');
       }
     }
   }
@@ -88,18 +80,16 @@ class AudioManager {
     try {
       FlameAudio.bgm.audioPlayer.setVolume(_musicVolume);
     } catch (e) {
-      print('Error setting background music volume: $e');
+      print('Error setting volume music: $e');
     }
   }
 
-  void setSfxVolume(double volume) {
-    _sfxVolume = volume.clamp(0.0, 1.0);
-  }
-
-  void toggleMusic() {
+  void toggleMUsic() {
     _isMusicEnabled = !_isMusicEnabled;
-    if (!_isMusicEnabled) {
-      stopBackgroundMusic();
+    if (_isMusicEnabled) {
+      resumeBackgroundMusic();
+    } else {
+      pauseBackgroundMusic();
     }
   }
 
@@ -113,8 +103,10 @@ class AudioManager {
   }
 
   void disableMusic() {
-    _isMusicEnabled = false;
-    pauseBackgroundMusic();
+    if (_isMusicEnabled) {
+      _isMusicEnabled = false;
+      pauseBackgroundMusic();
+    }
   }
 
   void enableSfx() {
@@ -122,12 +114,14 @@ class AudioManager {
   }
 
   void disableSfx() {
-    _isSfxEnabled = false;
+    if (_isSfxEnabled) {
+      _isSfxEnabled = false;
+    }
   }
 
   void dispose() {
     try {
-      FlameAudio.bgm.stop();
+      FlameAudio.bgm.dispose();
     } catch (e) {
       print('Error disposing audio: $e');
     }
