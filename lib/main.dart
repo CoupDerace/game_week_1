@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:games/game/fruit_catcher_game.dart';
 
 void main() {
   runApp(const MyGames());
@@ -24,6 +25,12 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
+  late FruitCatcherGame game;
+
+  void initState() {
+    super.initState();
+    game = FruitCatcherGame();
+  }
   final ValueNotifier<int> counter = ValueNotifier<int>(1);
 
   @override
