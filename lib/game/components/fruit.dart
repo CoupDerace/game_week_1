@@ -1,4 +1,4 @@
-  import 'dart:math';
+import 'dart:math';
 
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
@@ -15,8 +15,8 @@ class Fruit extends PositionComponent
   final Random random = Random();
 
   Fruit({super.position})
-      : type = FruitType.values[Random().nextInt(FruitType.values.length)],
-        super(size: Vector2.all (40));
+    : type = FruitType.values[Random().nextInt(FruitType.values.length)],
+      super(size: Vector2.all(40));
 
   @override
   Future<void> onLoad() async {
@@ -42,14 +42,13 @@ class Fruit extends PositionComponent
       gameRef.incrementScore();
       removeFromParent();
     }
-  }  
+  }
 
   @override
   void render(Canvas canvas) {
     super.render(canvas);
 
-    final paint = Paint()
-      ..style = PaintingStyle.fill;
+    final paint = Paint()..style = PaintingStyle.fill;
 
     switch (type) {
       case FruitType.apple:
@@ -66,5 +65,14 @@ class Fruit extends PositionComponent
         break;
     }
     canvas.drawCircle(Offset(size.x / 2, size.y / 2), size.x / 2, paint);
+
+    final shinePaint = Paint()
+      ..color = Colors.white.withOpacity(0.5)
+      ..style = PaintingStyle.fill;
+    canvas.drawCircle(
+      Offset(size.x / 2 - 5, size.y / 2 - 5),
+      size.x / 5,
+      shinePaint,
+    );
   }
 }
