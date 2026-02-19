@@ -27,7 +27,7 @@ class FruitCatcherGame extends FlameGame
     basket = Basket();
     await add(basket);
 
-    AudioManager().playBackgroundMusic();
+    await AudioManager().playBackgroundMusic();
   }
 
   @override

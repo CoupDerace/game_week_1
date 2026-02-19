@@ -1,4 +1,3 @@
-import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:games/game/fruit_catcher_game.dart';
 import 'package:games/game/managers/audio_manager.dart';
@@ -6,6 +5,7 @@ import 'package:games/game/managers/audio_manager.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AudioManager().initialize();
+  await AudioManager().playBackgroundMusic();
   runApp(const MyGames());
 }
 
@@ -39,15 +39,19 @@ class _GameScreenState extends State<GameScreen> {
     game = FruitCatcherGame();
   }
 
-  final ValueNotifier<int> counter = ValueNotifier<int>(1);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          GameWidget(game: game),
-
+          GestureDetector(
+            onTap: () {
+              if (game.scoreNotifier.value == 0) {
+                game.scoreNotifier.value = 0;
+              }
+            },
+            child: Container(color: Colors.transparent),
+          ),
           Positioned(
             top: 50,
             left: 20,
@@ -58,7 +62,7 @@ class _GameScreenState extends State<GameScreen> {
                 borderRadius: BorderRadius.circular(10),
               ),
               child: ValueListenableBuilder<int>(
-                valueListenable: counter,
+                valueListenable: game.scoreNotifier,
                 builder: (context, score, child) {
                   return Text(
                     'Score: $score',
@@ -81,7 +85,7 @@ class _GameScreenState extends State<GameScreen> {
                 IconButton(
                   icon: const Icon(Icons.music_note),
                   onPressed: () {
-                    AudioManager().toggleMUsic();
+                    AudioManager().toggleMusic();
                   },
                 ),
                 IconButton(
@@ -93,17 +97,11 @@ class _GameScreenState extends State<GameScreen> {
               ],
             ),
           ),
-
-          Positioned(
-            bottom: 40,
-            left: 20,
-            right: 20,
-            child: ElevatedButton(
-              onPressed: () {
-                counter.value++;
-              },
-              child: const Text('Tambah Score'),
-            ),
+          ElevatedButton(
+            onPressed: () async {
+              await AudioManager().playBackgroundMusic();
+            },
+            child: const Text("PLAY MUSIC"),
           ),
         ],
       ),

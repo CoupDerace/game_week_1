@@ -29,10 +29,11 @@ class AudioManager {
     }
   }
 
-  void playBackgroundMusic() {
+  Future<void> playBackgroundMusic() async {
     if (_isMusicEnabled) {
       try {
-        FlameAudio.bgm.play('music/background_music.mp3', volume: _musicVolume);
+        await FlameAudio.bgm.initialize();
+        await FlameAudio.bgm.play('music/background_music.mp3', volume: 0.5);
       } catch (e) {
         print('Error playing backsound: $e');
       }
@@ -84,7 +85,7 @@ class AudioManager {
     }
   }
 
-  void toggleMUsic() {
+  void toggleMusic() {
     _isMusicEnabled = !_isMusicEnabled;
     if (_isMusicEnabled) {
       resumeBackgroundMusic();
