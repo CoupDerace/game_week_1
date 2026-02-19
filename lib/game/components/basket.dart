@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+import 'package:flutter/material.dart';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
@@ -22,6 +21,11 @@ class Basket extends PositionComponent with HasGameRef, CollisionCallbacks {
     final paint = Paint()
     ..color = const Color(0xFF4CAF50);
     ..style = PaintingStyle.fill;
-    position.x = gameRef.size.x / 2;
+
+    final rect = RRect.fromRectAndRadius(
+      rect.fromLTWH(0, 0, size.x, size.y),
+      const Radius.circular(10),
+    );
+    
   }
 }
