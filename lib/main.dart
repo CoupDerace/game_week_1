@@ -1,8 +1,11 @@
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:games/game/fruit_catcher_game.dart';
+import 'package:games/game/managers/audio_manager.dart';
 
-void main() {
+void main () async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await AudioManager().initialize();
   runApp(const MyGames());
 }
 
@@ -11,10 +14,7 @@ class MyGames extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Games of Turtusi',
-      home: GameScreen(),
-    );
+    return const MaterialApp(title: 'Games of Turtusi', home: GameScreen());
   }
 }
 
@@ -32,6 +32,7 @@ class _GameScreenState extends State<GameScreen> {
     super.initState();
     game = FruitCatcherGame();
   }
+
   final ValueNotifier<int> counter = ValueNotifier<int>(1);
 
   @override
@@ -39,10 +40,8 @@ class _GameScreenState extends State<GameScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          GameWidget(
-            game: game
-          ),
-          
+          GameWidget(game: game),
+
           Positioned(
             top: 50,
             left: 20,
@@ -75,12 +74,13 @@ class _GameScreenState extends State<GameScreen> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.music_note),
-                  onPressed: () {},
+                  onPressed: () {
+                    AudioManager().toggleMUsic();
+                  },
                 ),
-                IconButton(
-                  icon: const Icon(Icons.volume_up),
-                  onPressed: () {},
-                ),
+                IconButton(icon: const Icon(Icons.volume_up), onPressed: () {
+                  AudioManager().toggleSfx();
+                }),
               ],
             ),
           ),

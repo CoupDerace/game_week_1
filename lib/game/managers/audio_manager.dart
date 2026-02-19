@@ -32,7 +32,7 @@ class AudioManager {
   void playBackgroundMusic() {
     if (_isMusicEnabled) {
       try {
-        FlameAudio.bgm.play('music/instrumental.mp3', volume: _musicVolume);
+        FlameAudio.bgm.play('music/background_music.mp3', volume: _musicVolume);
       } catch (e) {
         print('Error playing backsound: $e');
       }
