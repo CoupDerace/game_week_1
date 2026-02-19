@@ -1,3 +1,4 @@
+import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:games/game/fruit_catcher_game.dart';
 import 'package:games/game/managers/audio_manager.dart';
@@ -44,14 +45,69 @@ class _GameScreenState extends State<GameScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          GestureDetector(
-            onTap: () {
-              if (game.scoreNotifier.value == 0) {
-                game.scoreNotifier.value = 0;
-              }
-            },
-            child: Container(color: Colors.transparent),
+          GameWidget(game: game),
+
+          Positioned(
+            top: 50,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: ValueListenableBuilder<int>(
+                  valueListenable: game.timeLeftNotifier,
+                  builder: (context, time, child) {
+                    return Text(
+                      'Time: $time',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
           ),
+
+          ValueListenableBuilder<int>(
+            valueListenable: game.timeLeftNotifier,
+            builder: (context, time, child) {
+              if (time == 0) {
+                return Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        'GAME OVER',
+                        style: TextStyle(
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                        ),
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      ElevatedButton(
+                        onPressed: () {
+                          game.resetGame();
+                        },
+                        child: const Text('RESTART'),
+                      ),
+                    ],
+                  ),
+                );
+              }
+              return const SizedBox();
+            },
+          ),
+
           Positioned(
             top: 50,
             left: 20,
@@ -96,12 +152,6 @@ class _GameScreenState extends State<GameScreen> {
                 ),
               ],
             ),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              await AudioManager().playBackgroundMusic();
-            },
-            child: const Text("PLAY MUSIC"),
           ),
         ],
       ),
