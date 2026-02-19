@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:games/game/fruit_catcher_game.dart';
 import 'package:games/game/managers/audio_manager.dart';
 
-void main () async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AudioManager().initialize();
   runApp(const MyGames());
@@ -28,10 +28,10 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> {
   late FruitCatcherGame game;
 
-@override
-void dispose() {
-  game.onRemove(); 
-  super.dispose();
+  @override
+  void dispose() {
+    game.onRemove();
+    super.dispose();
   }
 
   void initState() {
@@ -84,9 +84,12 @@ void dispose() {
                     AudioManager().toggleMUsic();
                   },
                 ),
-                IconButton(icon: const Icon(Icons.volume_up), onPressed: () {
-                  AudioManager().toggleSfx();
-                }),
+                IconButton(
+                  icon: const Icon(Icons.volume_up),
+                  onPressed: () {
+                    AudioManager().toggleSfx();
+                  },
+                ),
               ],
             ),
           ),

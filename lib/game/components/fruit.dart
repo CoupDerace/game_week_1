@@ -1,9 +1,8 @@
 import 'dart:math';
-
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
-import 'package:games/game/fruit_catcher_game.dart';
+import '../fruit_catcher_game.dart';
 import 'basket.dart';
 
 enum FruitType { apple, banana, orange, strawberry }
@@ -69,6 +68,7 @@ class Fruit extends PositionComponent
     final shinePaint = Paint()
       ..color = Colors.white.withOpacity(0.5)
       ..style = PaintingStyle.fill;
+      
     canvas.drawCircle(
       Offset(size.x / 2 - 5, size.y / 2 - 5),
       size.x / 5,
